@@ -1,0 +1,75 @@
+[gd_scene load_steps=15 format=3 uid="uid://brwhlm8vwrm57"]
+
+[ext_resource type="Script" path="res://Scripts/LevelGeneration/LevelGenerator.cs" id="1_dwtof"]
+[ext_resource type="PackedScene" uid="uid://b71wwwq6jo2yi" path="res://Scenes/Characters/Player/Player.tscn" id="2_gdulj"]
+[ext_resource type="PackedScene" uid="uid://bul6nsjowvbwh" path="res://Scenes/frame_generator.tscn" id="3_875ce"]
+[ext_resource type="PackedScene" uid="uid://bvbun1n5dbhka" path="res://Scenes/platform_generator.tscn" id="3_yfxaf"]
+[ext_resource type="PackedScene" uid="uid://daah1rx1gkw2g" path="res://Scenes/enemy_generator.tscn" id="4_4pjpf"]
+[ext_resource type="PackedScene" uid="uid://dint4viqi4e56" path="res://Scenes/spawner.tscn" id="4_vanfr"]
+[ext_resource type="Texture2D" uid="uid://dpeeqgg457m3g" path="res://Assets/Debug/invalidTile.png" id="6_na52r"]
+[ext_resource type="Texture2D" uid="uid://cgcuapdnh80nt" path="res://Assets/Debug/validTile.png" id="7_cc1yp"]
+[ext_resource type="PackedScene" uid="uid://tck21y72cs44" path="res://Scenes/Objects/door.tscn" id="8_pryei"]
+[ext_resource type="PackedScene" uid="uid://bf6ostbu5y17d" path="res://Scenes/Objects/chest.tscn" id="9_yt0vo"]
+[ext_resource type="Texture2D" uid="uid://c5repxrx8jbpm" path="res://Assets/Sprites/background.png" id="11_kbaql"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_whipo"]
+texture = ExtResource("6_na52r")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vysoh"]
+texture = ExtResource("7_cc1yp")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_jwjmc"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_whipo")
+sources/1 = SubResource("TileSetAtlasSource_vysoh")
+
+[node name="LevelGenerator" type="Node2D"]
+script = ExtResource("1_dwtof")
+LevelSize = Vector2i(59, 32)
+
+[node name="FrameGenerator" parent="." instance=ExtResource("3_875ce")]
+
+[node name="PlatformGenerator" parent="." instance=ExtResource("3_yfxaf")]
+
+[node name="EnemyGenerator" parent="." instance=ExtResource("4_4pjpf")]
+
+[node name="Spawner" parent="." instance=ExtResource("4_vanfr")]
+
+[node name="DebugTileMapLayer" type="TileMapLayer" parent="."]
+visible = false
+tile_set = SubResource("TileSet_jwjmc")
+
+[node name="Entrance" parent="." instance=ExtResource("8_pryei")]
+
+[node name="Exit" parent="." instance=ExtResource("8_pryei")]
+
+[node name="Chest" parent="." instance=ExtResource("9_yt0vo")]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.5, 0.5)
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer"]
+offset_right = 2257.0
+offset_bottom = 1354.0
+texture = ExtResource("11_kbaql")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = 3
+offset_right = 2252.0
+offset_bottom = 1353.0
+mouse_filter = 2
+mouse_force_pass_scroll_events = false
+color = Color(0, 0, 0, 0)
+
+[node name="Player" parent="." instance=ExtResource("2_gdulj")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -6.933
+
+[editable path="Spawner"]

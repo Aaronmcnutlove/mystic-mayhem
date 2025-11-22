@@ -1,0 +1,284 @@
+[gd_scene load_steps=33 format=3 uid="uid://b71wwwq6jo2yi"]
+
+[ext_resource type="Script" path="res://Scripts/Character/Player/Player.cs" id="1_l2rlm"]
+[ext_resource type="Texture2D" uid="uid://bd3upfojwluw1" path="res://Assets/Sprites/Character/Player/Warrior/Animation_Attack/GigaWarriorStandingAttack2.png" id="6_x6ucm"]
+[ext_resource type="Texture2D" uid="uid://c0c8wsf7sh3v6" path="res://Assets/Sprites/Character/Player/Warrior/Animation_Move/WarriorWalk1.png" id="7_2jrpj"]
+[ext_resource type="Texture2D" uid="uid://c0b8yp3ibdflq" path="res://Assets/Sprites/Character/Player/Warrior/Animation_Idle/WarriorIdle1.png" id="7_fsoa7"]
+[ext_resource type="Texture2D" uid="uid://bg308eqqrmfjk" path="res://Assets/Sprites/Character/Player/Warrior/Animation_Attack/GigaWarriorStandingAttack3.png" id="7_t07e8"]
+[ext_resource type="AudioStream" uid="uid://bifcxuwvdku00" path="res://Assets/Sfx/playerDeath.wav" id="7_ucotv"]
+[ext_resource type="Texture2D" uid="uid://b0sn3s8ftnm1m" path="res://Assets/Sprites/Character/Player/Warrior/Animation_Move/WarriorWalk2.png" id="8_5fev3"]
+[ext_resource type="Texture2D" uid="uid://bbn3d63oucg1e" path="res://Assets/Sprites/Character/Player/Warrior/Animation_Attack/GigaWarriorStandingAttack4.png" id="8_bndxu"]
+[ext_resource type="Texture2D" uid="uid://s4k6rsw0vxdb" path="res://Assets/Sprites/Character/Player/Warrior/Animation_Idle/WarriorIdle2.png" id="8_xo0l2"]
+[ext_resource type="Texture2D" uid="uid://dji7ohdnfro4c" path="res://Assets/Sprites/Character/Player/Warrior/Animation_Idle/WarriorIdle3.png" id="9_gf370"]
+[ext_resource type="Texture2D" uid="uid://chwicauhv5ebd" path="res://Assets/Sprites/Character/Player/Warrior/Animation_Move/WarriorWalk3.png" id="9_kp5gq"]
+[ext_resource type="Script" path="res://Scripts/Character/Player/PlayerIdleState.cs" id="9_slpt1"]
+[ext_resource type="Script" path="res://Scripts/Character/Player/PlayerMoveState.cs" id="10_82i2q"]
+[ext_resource type="Texture2D" uid="uid://5liof810tlt5" path="res://Assets/Sprites/Character/Player/Warrior/Animation_Idle/WarriorIdle4.png" id="10_j8dv8"]
+[ext_resource type="Script" path="res://Scripts/Character/Player/PlayerJumpState.cs" id="11_3sg2n"]
+[ext_resource type="Script" path="res://Scripts/Character/Player/PlayerAttackState.cs" id="12_b17sf"]
+[ext_resource type="PackedScene" uid="uid://untwbv6c7xc2" path="res://Scenes/Characters/state_machine.tscn" id="13_l7ebq"]
+[ext_resource type="Texture2D" uid="uid://bdmcciwxu6dgs" path="res://Assets/Sprites/Character/Player/Warrior/Animation_Jump/Warrior_Jumping.png" id="13_xlsde"]
+[ext_resource type="Texture2D" uid="uid://c348h1hm7epy7" path="res://Assets/Sprites/Character/Player/Warrior/Animation_Death/Death.png" id="14_tisbs"]
+[ext_resource type="AudioStream" uid="uid://bdd51e6cwv2vy" path="res://Assets/Sfx/jump.wav" id="19_mlnnq"]
+[ext_resource type="PackedScene" uid="uid://cv8xo6fltm2ep" path="res://Scenes/Menus/HUD.tscn" id="19_w6eje"]
+[ext_resource type="Script" path="res://Scripts/Character/Player/PlayerDeathState.cs" id="20_df8kn"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_scoyt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bxntq"]
+
+[sub_resource type="Animation" id="Animation_14li8"]
+resource_name = "Attack"
+length = 0.3
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("7_t07e8"), ExtResource("6_x6ucm"), ExtResource("8_bndxu")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StateMachine/AttackState")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"PerformHit"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_rj1gw"]
+resource_name = "Death"
+length = 3.5
+step = 0.142857
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.142857, 0.285714, 0.428571, 0.571429, 0.714286, 0.857143),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("7_fsoa7"), ExtResource("7_fsoa7"), ExtResource("14_tisbs"), ExtResource("14_tisbs"), ExtResource("14_tisbs"), ExtResource("14_tisbs"), ExtResource("14_tisbs")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer:stream")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_ucotv")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_5k773"]
+resource_name = "Idle"
+loop_mode = 1
+step = 0.0555556
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0555556, 0.111111, 0.166667, 0.222222, 0.277778, 0.333333, 0.388889, 0.444444, 0.5, 0.555556, 0.611111, 0.666667, 0.722222, 0.777778, 0.833333, 0.888889, 0.944444),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("7_fsoa7"), ExtResource("7_fsoa7"), ExtResource("7_fsoa7"), ExtResource("8_xo0l2"), ExtResource("8_xo0l2"), ExtResource("8_xo0l2"), ExtResource("7_fsoa7"), ExtResource("7_fsoa7"), ExtResource("7_fsoa7"), ExtResource("8_xo0l2"), ExtResource("8_xo0l2"), ExtResource("8_xo0l2"), ExtResource("9_gf370"), ExtResource("9_gf370"), ExtResource("9_gf370"), ExtResource("10_j8dv8"), ExtResource("10_j8dv8"), ExtResource("10_j8dv8")]
+}
+
+[sub_resource type="Animation" id="Animation_p5slu"]
+resource_name = "Jump"
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("13_xlsde"), ExtResource("13_xlsde"), ExtResource("13_xlsde"), ExtResource("13_xlsde"), ExtResource("13_xlsde"), ExtResource("13_xlsde"), ExtResource("13_xlsde"), ExtResource("13_xlsde")]
+}
+
+[sub_resource type="Animation" id="Animation_t35jx"]
+resource_name = "Move"
+loop_mode = 1
+step = 0.166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667, 0.333333, 0.5, 0.666667, 0.833333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("7_2jrpj"), ExtResource("8_5fev3"), ExtResource("9_kp5gq"), ExtResource("7_2jrpj"), ExtResource("8_5fev3"), ExtResource("9_kp5gq")]
+}
+
+[sub_resource type="Animation" id="Animation_a65ei"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("CompressedTexture2D_scoyt")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer:stream")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("19_mlnnq")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n0yme"]
+_data = {
+"Attack": SubResource("Animation_14li8"),
+"Death": SubResource("Animation_rj1gw"),
+"Idle": SubResource("Animation_5k773"),
+"Jump": SubResource("Animation_p5slu"),
+"Move": SubResource("Animation_t35jx"),
+"RESET": SubResource("Animation_a65ei")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vx131"]
+size = Vector2(20, 38)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("AnimationPlayerNode", "Sprite2DNode", "StateMachineNode", "AudioPlayer", "HurtboxNode", "HitboxNode", "HitboxShapeNode") groups=["Player"]]
+collision_layer = 2
+script = ExtResource("1_l2rlm")
+AnimationPlayerNode = NodePath("AnimationPlayer")
+Sprite2DNode = NodePath("Sprite2D")
+StateMachineNode = NodePath("StateMachine")
+AudioPlayer = NodePath("AudioStreamPlayer")
+HurtboxNode = NodePath("Hurtbox")
+HitboxNode = NodePath("Hitbox")
+HitboxShapeNode = NodePath("Hitbox/CollisionShape2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(14, -21)
+texture = SubResource("CompressedTexture2D_scoyt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(11, -5)
+scale = Vector2(1.8, 3.16)
+shape = SubResource("RectangleShape2D_bxntq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_n0yme")
+}
+
+[node name="Camera2D" type="Camera2D" parent="."]
+scale = Vector2(0.5, 0.5)
+
+[node name="StateMachine" parent="." node_paths=PackedStringArray("currentState", "states") instance=ExtResource("13_l7ebq")]
+currentState = NodePath("IdleState")
+states = [NodePath("IdleState"), NodePath("MoveState"), NodePath("JumpState"), NodePath("AttackState"), NodePath("DeathState")]
+
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource("9_slpt1")
+
+[node name="MoveState" type="Node" parent="StateMachine"]
+script = ExtResource("10_82i2q")
+
+[node name="JumpState" type="Node" parent="StateMachine"]
+script = ExtResource("11_3sg2n")
+
+[node name="AttackState" type="Node" parent="StateMachine"]
+script = ExtResource("12_b17sf")
+
+[node name="DeathState" type="Node" parent="StateMachine"]
+script = ExtResource("20_df8kn")
+
+[node name="HUDCanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="HUDCanvasLayer" instance=ExtResource("19_w6eje")]
+offset_left = 17.0
+offset_top = 8.0
+offset_right = -15.0
+offset_bottom = -5.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_mlnnq")
+volume_db = -15.0
+
+[node name="Hitbox" type="Area2D" parent="."]
+position = Vector2(11, -1)
+scale = Vector2(-1.80646, 0.947366)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_vx131")
+disabled = true
+
+[node name="Hurtbox" type="Area2D" parent="."]
+position = Vector2(-2, 0)
+scale = Vector2(1.17603, 1)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(11, -5)
+scale = Vector2(1.76, 3.19419)
+shape = SubResource("RectangleShape2D_bxntq")

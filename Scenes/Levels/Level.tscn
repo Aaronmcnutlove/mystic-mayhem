@@ -1,0 +1,144 @@
+[gd_scene load_steps=9 format=3 uid="uid://d4ac36yvqe1vx"]
+
+[ext_resource type="Script" path="res://Scripts/Level.cs" id="1_y1qan"]
+[ext_resource type="Texture2D" uid="uid://c5repxrx8jbpm" path="res://Assets/Sprites/background.png" id="2_2edqs"]
+[ext_resource type="AudioStream" uid="uid://br3mds3nirag6" path="res://Assets/Sfx/exitLevel.wav" id="3_clge4"]
+[ext_resource type="AudioStream" uid="uid://c3gbj2lh2ubqn" path="res://Assets/Music/FunkyBeatsToKillMonstersTo.wav" id="4_a7dma"]
+
+[sub_resource type="Animation" id="Animation_rwb1e"]
+resource_name = "ChangeScene"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer:stream")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_clge4")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_8bpyp"]
+resource_name = "EnterScene"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_y4qbj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer:stream")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_28p7c"]
+_data = {
+"ChangeScene": SubResource("Animation_rwb1e"),
+"EnterScene": SubResource("Animation_8bpyp"),
+"RESET": SubResource("Animation_y4qbj")
+}
+
+[node name="LevelNode" type="Node2D"]
+script = ExtResource("1_y1qan")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.5, 0.5)
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer"]
+texture_filter = 1
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 2078.0
+offset_bottom = 1071.0
+texture = ExtResource("2_2edqs")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_28p7c")
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = 3
+offset_left = -1050.0
+offset_top = -468.0
+offset_right = 3022.0
+offset_bottom = 2116.0
+mouse_filter = 2
+mouse_force_pass_scroll_events = false
+color = Color(1, 1, 1, 0)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_a7dma")
+volume_db = -9.0
+autoplay = true

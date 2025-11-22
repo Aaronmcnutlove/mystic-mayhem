@@ -1,0 +1,307 @@
+[gd_scene load_steps=43 format=3 uid="uid://bjupuljh4v708"]
+
+[ext_resource type="Script" path="res://Scripts/Character/Enemy/Enemy.cs" id="1_s7n2v"]
+[ext_resource type="Texture2D" uid="uid://uf67ea6s75px" path="res://Assets/Sprites/Character/Enemy/Ghost.png" id="2_qnxvh"]
+[ext_resource type="Texture2D" uid="uid://c25ugshfk3ith" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Idle/Ghost_Idle1.png" id="3_dwpcu"]
+[ext_resource type="PackedScene" uid="uid://untwbv6c7xc2" path="res://Scenes/Characters/state_machine.tscn" id="4_pcvf8"]
+[ext_resource type="Texture2D" uid="uid://byuyjwvykdpl5" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Idle/Ghost_Idle2.png" id="4_s8jux"]
+[ext_resource type="Texture2D" uid="uid://co0jk131ksp7t" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Death/GD1.png" id="5_4lql4"]
+[ext_resource type="Texture2D" uid="uid://c5dcgr43rd0nl" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Attack/Ghost_Attack1.png" id="5_aw7f7"]
+[ext_resource type="Script" path="res://Scripts/Character/Enemy/EnemyIdleState.cs" id="5_olfrj"]
+[ext_resource type="Texture2D" uid="uid://dli36ptrvkvb3" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Attack/Ghost_Attack2.png" id="6_brtih"]
+[ext_resource type="Texture2D" uid="uid://dknyddgva3ijr" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Death/GD2.png" id="6_g5nia"]
+[ext_resource type="Script" path="res://Scripts/Character/Enemy/EnemyReturnState.cs" id="6_ksx3o"]
+[ext_resource type="Texture2D" uid="uid://cwbyewffuapqj" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Death/GD3.png" id="7_oaj22"]
+[ext_resource type="Texture2D" uid="uid://bjk45kou0gqm" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Death/GD5.png" id="8_x10hb"]
+[ext_resource type="Texture2D" uid="uid://calrv0e67q8pr" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Death/GD6.png" id="9_55bcq"]
+[ext_resource type="Texture2D" uid="uid://d0sxa4ylmwino" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Death/GD7.png" id="10_q1ogt"]
+[ext_resource type="Script" path="res://Scripts/Character/Enemy/EnemyPatrolState.cs" id="10_rhu0y"]
+[ext_resource type="Script" path="res://Scripts/Character/Enemy/EnemyChaseState.cs" id="11_g8kic"]
+[ext_resource type="Texture2D" uid="uid://bfry3254ivnq3" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Death/GD8.png" id="11_mxw5d"]
+[ext_resource type="Script" path="res://Scripts/Character/Enemy/EnemyAttackState.cs" id="12_ibycl"]
+[ext_resource type="Texture2D" uid="uid://12xntmwh5fh6" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Death/GD9.png" id="12_mb760"]
+[ext_resource type="Texture2D" uid="uid://dtoxqyjrq3yai" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Death/GD10.png" id="13_olwti"]
+[ext_resource type="Texture2D" uid="uid://wojnqs8dke1" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Death/GD11.png" id="14_nhfrh"]
+[ext_resource type="Texture2D" uid="uid://n0nuc0kq6dbt" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Death/GD12.png" id="15_crsid"]
+[ext_resource type="Texture2D" uid="uid://bx02fyupu1yxu" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Death/GD15.png" id="16_l80gl"]
+[ext_resource type="Texture2D" uid="uid://srb86xi86peo" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Death/GD16.png" id="17_rdbxp"]
+[ext_resource type="Texture2D" uid="uid://sjaxbpskgxcq" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Death/GD17.png" id="18_1qk2l"]
+[ext_resource type="Texture2D" uid="uid://d2rnhtt6jn7mx" path="res://Assets/Sprites/Character/Enemy/GreenGhost/Animation_Death/GD18.png" id="19_x7tna"]
+[ext_resource type="AudioStream" uid="uid://c686auqxymwx0" path="res://Assets/Sfx/ghostDeath.wav" id="20_ibe08"]
+[ext_resource type="Script" path="res://Scripts/Character/Enemy/EnemyDeathState.cs" id="31_csr7q"]
+[ext_resource type="PackedScene" uid="uid://ctg2nmxp3xh7j" path="res://Scenes/Spawnables/enemy_spawn.tscn" id="31_q4ep3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oa781"]
+radius = 15.0
+height = 76.0
+
+[sub_resource type="Animation" id="Animation_g30ne"]
+resource_name = "Attack"
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("5_aw7f7"), ExtResource("6_brtih"), ExtResource("5_aw7f7"), ExtResource("6_brtih")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../StateMachine/AttackState")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"PerformHit"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_ogewy"]
+resource_name = "Death"
+length = 1.6
+step = 0.0526316
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.105263, 0.210526, 0.315789, 0.421053, 0.526316, 0.631579, 0.736842, 0.842105, 0.947368, 1.05263, 1.15789, 1.26316, 1.36842, 1.47368),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("5_4lql4"), ExtResource("6_g5nia"), ExtResource("7_oaj22"), ExtResource("8_x10hb"), ExtResource("9_55bcq"), ExtResource("10_q1ogt"), ExtResource("11_mxw5d"), ExtResource("12_mb760"), ExtResource("13_olwti"), ExtResource("14_nhfrh"), ExtResource("15_crsid"), ExtResource("16_l80gl"), ExtResource("17_rdbxp"), ExtResource("18_1qk2l"), ExtResource("19_x7tna")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AudioStreamPlayer:stream")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("20_ibe08")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AudioStreamPlayer:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_x6bf4"]
+resource_name = "Idle"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_dwpcu"), ExtResource("4_s8jux"), ExtResource("3_dwpcu"), ExtResource("4_s8jux")]
+}
+
+[sub_resource type="Animation" id="Animation_h7ce0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_qnxvh")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AudioStreamPlayer:stream")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AudioStreamPlayer:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u6m5e"]
+_data = {
+"Attack": SubResource("Animation_g30ne"),
+"Death": SubResource("Animation_ogewy"),
+"Idle": SubResource("Animation_x6bf4"),
+"RESET": SubResource("Animation_h7ce0")
+}
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_n54jj"]
+vertices = PackedVector2Array(181.531, 3, -193.492, 3, -193.477, 2.95313, 181.438, 1.03906)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-203, -7, 191, -9, 192, 13, -204, 13)])
+parsed_geometry_type = 1
+
+[sub_resource type="Curve2D" id="Curve2D_dtgxo"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -171, 0, 0, 0, 0, 0, 152, 0)
+}
+point_count = 2
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vgys7"]
+radius = 124.036
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2ddjq"]
+radius = 30.0
+height = 93.9998
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_johrx"]
+size = Vector2(34.9904, 33.3506)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gkj3s"]
+radius = 9.35113
+height = 99.335
+
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("spawner", "AnimationPlayerNode", "Sprite2DNode", "StateMachineNode", "HurtboxNode", "HitboxNode", "HitboxShapeNode", "PathNode", "Agent2DNode", "ChaseAreaNode", "AttackAreaNode")]
+collision_layer = 4
+script = ExtResource("1_s7n2v")
+EnemySpeed = 100.0
+spawner = NodePath("Spawn")
+AnimationPlayerNode = NodePath("AnimationPlayer")
+Sprite2DNode = NodePath("Sprite2D")
+StateMachineNode = NodePath("StateMachine")
+HurtboxNode = NodePath("Hurtbox")
+HitboxNode = NodePath("Hitbox")
+HitboxShapeNode = NodePath("Hitbox/CollisionShape2D")
+PathNode = NodePath("Path2D")
+Agent2DNode = NodePath("NavigationAgent2D")
+ChaseAreaNode = NodePath("ChaseArea")
+AttackAreaNode = NodePath("AttackArea")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 5
+z_as_relative = false
+texture = ExtResource("2_qnxvh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5)
+shape = SubResource("CapsuleShape2D_oa781")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../CollisionShape2D")
+libraries = {
+"": SubResource("AnimationLibrary_u6m5e")
+}
+
+[node name="StateMachine" parent="." node_paths=PackedStringArray("currentState", "states") instance=ExtResource("4_pcvf8")]
+currentState = NodePath("IdleState")
+states = [NodePath("IdleState"), NodePath("ReturnState"), NodePath("PatrolState"), NodePath("ChaseState"), NodePath("AttackState"), NodePath("DeathState")]
+
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource("5_olfrj")
+
+[node name="ReturnState" type="Node" parent="StateMachine"]
+script = ExtResource("6_ksx3o")
+
+[node name="PatrolState" type="Node" parent="StateMachine" node_paths=PackedStringArray("idleTimerNode")]
+script = ExtResource("10_rhu0y")
+idleTimerNode = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="StateMachine/PatrolState"]
+one_shot = true
+
+[node name="ChaseState" type="Node" parent="StateMachine" node_paths=PackedStringArray("chaseTimerNode")]
+script = ExtResource("11_g8kic")
+chaseTimerNode = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="StateMachine/ChaseState"]
+wait_time = 0.5
+autostart = true
+
+[node name="AttackState" type="Node" parent="StateMachine"]
+script = ExtResource("12_ibycl")
+
+[node name="DeathState" type="Node" parent="StateMachine"]
+script = ExtResource("31_csr7q")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_n54jj")
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_dtgxo")
+
+[node name="ChaseArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChaseArea"]
+shape = SubResource("CircleShape2D_vgys7")
+
+[node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+rotation = 1.56891
+shape = SubResource("CapsuleShape2D_2ddjq")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(1.00001, -0.999998)
+rotation = 3.14159
+scale = Vector2(1.88623, -1.79907)
+shape = SubResource("RectangleShape2D_johrx")
+disabled = true
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, 3)
+scale = Vector2(2.24572, 0.664419)
+shape = SubResource("CapsuleShape2D_gkj3s")
+
+[node name="Spawn" parent="." instance=ExtResource("31_q4ep3")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -16.652
